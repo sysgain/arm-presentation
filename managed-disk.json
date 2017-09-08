@@ -1,0 +1,47 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "managedDiskPrefix": {
+            "type": "string",
+            "defaultValue": "store"
+        },
+        "managedDiskSku": {
+            "type": "string",
+            "defaultValue": "Standard_LRS",
+            "allowedValues": [
+                "Standard_LRS",
+                "Premium_LRS"
+            ]
+        },
+        "diskSizeGB":{
+            "type": "int",
+            "defaultValue": 1023
+        }
+    },
+    "variables": {
+        "location": "[resourceGroup().location]",
+        "suffix": "[substring(uniqueString(resourceGroup().id),0,5)]",
+        "managedDiskName": "[concat(parameters('managedDiskPrefix'),'-',variables('suffix'))]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Compute/disks",
+            "name": "[concat(variables('managedDiskName'),'-datadisk1')]",
+            "apiVersion": "2017-03-30",
+            "location": "[variables('location')]",
+            "sku": {
+                "name": "[parameters('managedDiskSku')]"
+            },
+            "properties": {
+                "creationData": {
+                    "createOption": "Empty"
+                },
+                "diskSizeGB": "[parameters('diskSizeGB')]"
+            }
+        }
+    ],
+    "outputs": {
+        
+    }
+}

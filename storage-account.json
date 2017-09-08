@@ -1,0 +1,53 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "storageAccountPrefix": {
+            "type": "string",
+            "defaultValue": "store"
+        },
+        "storageAccountSku": {
+            "type": "string",
+            "defaultValue": "Standard_LRS",
+            "allowedValues": [
+                "Standard_LRS",
+                "Standard_GRS",
+                "Standard_RAGRS",
+                "Standard_ZRS",
+                "Premium_LRS"
+            ]
+        }
+    },
+    "variables": {
+        "location": "[resourceGroup().location]",
+        "suffix": "[substring(uniqueString(resourceGroup().id),0,5)]",
+        "storageAccountName": "[concat(parameters('storageAccountPrefix'),variables('suffix'))]"
+    },
+    "resources": [
+        {
+            "name": "[variables('storageAccountName')]",
+            "type": "Microsoft.Storage/storageAccounts",
+            "apiVersion": "2017-06-01",
+            "sku": {
+                "name": "[parameters('storageAccountSku')]"
+            },
+            "kind": "Storage",
+            "location": "[variables('location')]",
+            "tags": {}
+        }
+    ],
+    "outputs": {
+        "primaryKey": {
+            "type": "string",
+            "value": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2017-06-01').keys[0].value]"
+        },
+        "secondaryKey": {
+            "type": "string",
+            "value": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2017-06-01').keys[1].value]"
+        },
+        "storageAccountEndpoint": {
+            "type": "string",
+            "value": "[reference(variables('storageAccountName')).primaryEndpoints.blob]"
+        }
+    }
+}
