@@ -159,7 +159,7 @@
                                 "id": "[concat(variables('lbId'),'/frontendIPConfigurations/LoadBalancerFrontEnd')]"
                             },
                             "frontendPortRangeStart": 4000,
-                            "frontendPortRangeEnd": 4010,
+                            "frontendPortRangeEnd": 4004,
                             "protocol": "Tcp"
                         }
                     }
