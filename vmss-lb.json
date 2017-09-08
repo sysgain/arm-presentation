@@ -45,8 +45,7 @@
         "lbPipDns": "[concat('app-iis-',variables('suffix'))]",
         "vmssName": "virtual-machine-scaleset",
         "nodeSize": "Standard_A2",
-        "nicName": "network-interface",
-        
+        "nicName": "network-interface"
     },
     "resources": [
         {
@@ -159,8 +158,8 @@
                             "frontendIPConfiguration": {
                                 "id": "[concat(variables('lbId'),'/frontendIPConfigurations/LoadBalancerFrontEnd')]"
                             },
-                            "frontendPortRangeEnd": 4000,
-                            "frontendPortRangeStart": 4010,
+                            "frontendPortRangeStart": 4000,
+                            "frontendPortRangeEnd": 4010,
                             "protocol": "Tcp"
                         }
                     }
