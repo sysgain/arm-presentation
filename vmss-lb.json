@@ -177,7 +177,7 @@
             "dependsOn": [
                 "[resourceId('Microsoft.Network/loadBalancers', variables('lbName'))]",
                 "[resourceId('Microsoft.Network/virtualNetworks', variables('vnetName'))]"
-            ]
+            ],
             "sku": {
                 "name": "[variables('nodeSize')]",
                 "tier": "Standard",
