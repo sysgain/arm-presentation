@@ -10,10 +10,6 @@
             "defaultValue": "Ashpassword123",
             "type": "string"
         },
-        "osDiskSizeGB": {
-            "defaultValue": 127,
-            "type": "int"
-        },
         "storagePerformance": {
             "type": "string",
             "defaultValue": "Standard_LRS",
@@ -38,14 +34,14 @@
         "location": "[resourceGroup().location]",
         "suffix": "[substring(uniqueString(resourceGroup().id),0,5)]",
         "vnetName": "virtual-network",
-        "avsetName": "availability-set",
         "lbName": "load-balancer",
         "lbId": "[resourceId('Microsoft.Network/loadBalancers', variables('lbName'))]",
         "lbPipName": "lb-public-ip-address",
         "lbPipDns": "[concat('app-iis-',variables('suffix'))]",
         "vmssName": "virtual-machine-scaleset",
         "nodeSize": "Standard_A2",
-        "nicName": "network-interface"
+        "nicName": "network-interface",
+        "computerNamePrefix": "node"
     },
     "resources": [
         {
@@ -67,19 +63,6 @@
                         }
                     }
                 ]
-            }
-        },
-        {
-            "type": "Microsoft.Compute/availabilitySets",
-            "sku": {
-                "name": "Aligned"
-            },
-            "name": "[variables('avsetName')]",
-            "apiVersion": "2017-03-30",
-            "location": "[variables('location')]",
-            "properties": {
-                "platformUpdateDomainCount": 5,
-                "platformFaultDomainCount": 2
             }
         },
         {
@@ -131,7 +114,7 @@
                             "idleTimeoutInMinutes": 4,
                             "protocol": "Tcp",
                             "backendAddressPool": {
-                                "id": "[concat(variables('lbId'),'/backendAddressPools/dtr-bkpool')]"
+                                "id": "[concat(variables('lbId'),'/backendAddressPools/bkpool')]"
                             },
                             "probe": {
                                 "id": "[concat(variables('lbId'),'/probes/http-hlt')]"
@@ -159,7 +142,7 @@
                                 "id": "[concat(variables('lbId'),'/frontendIPConfigurations/LoadBalancerFrontEnd')]"
                             },
                             "frontendPortRangeStart": 4000,
-                            "frontendPortRangeEnd": 4004,
+                            "frontendPortRangeEnd": 4012,
                             "protocol": "Tcp"
                         }
                     }
@@ -206,7 +189,7 @@
                         }
                     },
                     "osProfile": {
-                        "computerName": "[variables('vmssName')]",
+                        "computerNamePrefix": "[variables('computerNamePrefix')]",
                         "adminUsername": "[parameters('adminUsername')]",
                         "adminPassword": "[parameters('adminPassword')]",
                         "windowsConfiguration": {
@@ -229,6 +212,11 @@
                                                 "loadBalancerBackendAddressPools": [
                                                     {
                                                         "id": "[concat(resourceId('Microsoft.Network/loadBalancers', variables('lbName')), '/backendAddressPools/bkpool')]"
+                                                    }
+                                                ],
+                                                "loadBalancerInboundNatPools":[
+                                                    {
+                                                        "id": "[concat(resourceId('Microsoft.Network/loadBalancers', variables('lbName')), '/inboundNatPools/rdp')]"
                                                     }
                                                 ]
                                             }
