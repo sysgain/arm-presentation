@@ -87,7 +87,7 @@ Write-Host Successfully created a load balancer
 
 Write-Host Creating VM Scale set...
 
-$vmss = az vmss create --image $vmImage -n $vmssName -g $rgName --admin-username $vmUsername --admin-password $vmPassword --backend-pool-name $bkpool --instance-count $vmCount --os-disk-name $osDiskName --lb-nat-pool-name rdp --lb $lbName --subnet $subnetName --vnet-name $vnetName --disable-overprovision 
+$vmss = az vmss create --image $vmImage -n $vmssName -g $rgName --admin-username $vmUsername --admin-password $vmPassword --backend-pool-name $bkpool --instance-count $vmCount --lb-nat-pool-name rdp --lb $lbName --subnet $subnetName --vnet-name $vnetName --disable-overprovision 
 
 Write-Host Successfully creating VM Scale set.
 
