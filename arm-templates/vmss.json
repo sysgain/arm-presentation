@@ -28,10 +28,14 @@
                 4,
                 5
             ]
+        },
+        "customImageResourceId": {
+            "type": "string",
+            "defaultValue": "/subscriptions/cf45c459-955b-4ad2-b1d4-04172ed9bc26/resourceGroups/vm-rg/providers/Microsoft.Compute/images/customImage"
         }
     },
     "variables": {
-        "location": "[resourceGroup().location]",
+        "location": "westus",
         "suffix": "[substring(uniqueString(resourceGroup().id),0,5)]",
         "vnetName": "virtual-network",
         "lbName": "load-balancer",
@@ -182,10 +186,7 @@
                             }
                         },
                         "imageReference": {
-                            "publisher": "MicrosoftWindowsServer",
-                            "offer": "WindowsServer",
-                            "sku": "2012-R2-Datacenter",
-                            "version": "latest"
+                            "id": "[parameters('customImageResourceId')]"
                         }
                     },
                     "osProfile": {
