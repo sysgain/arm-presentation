@@ -1,8 +1,10 @@
 ﻿Write-Host ********************* Azure CLI 2.0 ********************************************************
 ## Author : Ashwin Sebastian
 
+## Please Create a Service Principal Application ID and its Secret key and assign RBAC to Contributer and enter its detail below
 
-$subsId="" # Enter Subscription ID
+#################### Variabble Section ###########################################
+$subsId="cf45c459-955b-4ad2-b1d4-04172ed9bc26" # Enter Subscription ID
 $appId=""  # Enter service principal app id
 $appSecret="" # Enter app secret key
 $tenantId="" # Enter tenant id

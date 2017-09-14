@@ -2,15 +2,16 @@
 ## Author : Ashwin Sebastian
 
 
-
+## Please Create a Service Principal Application ID and its Secret key and assign RBAC to Contributer and enter its detail below
 
 #################### Variabble Section ###########################################
-$subsId="" # Enter Subscription ID
+$subsId="cf45c459-955b-4ad2-b1d4-04172ed9bc26" # Enter Subscription ID
 $appId="" # Enter app Id
 $appSecret="" # Enter app secret key
 $tenantId="" # Enter tenant id
 $region='westus' #Specify Azure region
 $vmCount=2  # Specify VM count
+$vmImage="/subscriptions/cf45c459-955b-4ad2-b1d4-04172ed9bc26/resourceGroups/vm-rg/providers/Microsoft.Compute/images/customImage" # Enter Custom Image resource ID
 $charSet = "abcdefghijklmnopqrstuvwxyz0123456789".ToCharArray()
 $uniqueString = ""
 for ($i = 0; $i -lt 5; $i++ ) {
@@ -40,7 +41,7 @@ $vnetAddressPrefix="10.0.0.0/16"
 
 $vmUsername="adminuser"
 $vmPassword="Ashpassword123"
-$vmImage="Win2012R2Datacenter"
+
 
 
 #################### End of Variable Section #####################################
